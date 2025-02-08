@@ -8,7 +8,7 @@ services:
         volumes:
             - '/home/izhdanov/triton_models:/models' #map your repo with models to trions repo named models
         container_name: 'HSE-seminar1-triton'
-        image:    nvcr.io/nvidia/tritonserver:25.01-py3
+        image:    nvcr.io/nvidia/tritonserver:24.05-py3
         command: tritonserver --id=HSE_seminar1  --model-control-mode=explicit --model-repository=/models --exit-on-error=false --repository-poll-secs=60 --strict-model-config=false --allow-metrics=true --allow-gpu-metrics=true --allow-cpu-metrics=true
         deploy:
             resources:
