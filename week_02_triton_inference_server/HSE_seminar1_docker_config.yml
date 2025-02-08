@@ -1,0 +1,20 @@
+version: '3.3'
+services: 
+    tritonserver:
+        ports:             # map ports of docker to trion server
+            - '14280:8000' # http infer
+            - '14281:8001' # grpc infer         
+            - '14282:8002' # server metrics
+        volumes:
+            - '/home/izhdanov/triton_models:/models' #map your repo with models to trions repo named models
+        container_name: 'HSE-seminar1-triton'
+        image:    nvcr.io/nvidia/tritonserver:24.05-py3
+        command: tritonserver --id=HSE_seminar1  --model-control-mode=explicit --model-repository=/models --exit-on-error=false --repository-poll-secs=60 --strict-model-config=false --allow-metrics=true --allow-gpu-metrics=true --allow-cpu-metrics=true
+        deploy:
+            resources:
+                reservations:
+                    devices:  # specifies which gpus container can see
+                      - driver: nvidia
+                        device_ids: [ '1' ]
+                        capabilities: [gpu]
+        shm_size: '32gb'
