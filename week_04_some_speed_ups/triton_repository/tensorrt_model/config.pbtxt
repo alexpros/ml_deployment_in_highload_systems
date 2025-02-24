@@ -1,0 +1,26 @@
+name: "tensorrt_model"
+platform: "tensorrt_plan"
+max_batch_size: 16
+
+input [
+  {
+    name: "input"
+    data_type: TYPE_FP32
+    dims: [3, 224, 224]  # Fixed dimensions for color channels and image size
+  }
+]
+
+output [
+  {
+    name: "output"
+    data_type: TYPE_FP32
+    dims: [1000]  # Fixed output size for ImageNet classification (1000 classes)
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU  # Deploy the model on a CPU
+  }
+]
