@@ -1,0 +1,32 @@
+name: "resnet_concat_preprocessing"
+backend: "python"
+max_batch_size: 4
+
+
+input [
+  {
+    name: "IMAGE_V1"
+    data_type: TYPE_FP32
+    dims: [ 3, 224, 224 ]
+  },
+  {
+    name: "IMAGE_V2"
+    data_type: TYPE_FP32
+    dims: [ 3, 224, 224 ]
+  }
+]
+
+output [
+  {
+    name: "IMAGE"
+    data_type: TYPE_FP32
+    dims: [ 3, 224, 224 ]
+  }
+]
+
+instance_group [
+    {
+        count: 4
+        kind: KIND_CPU
+    }
+]

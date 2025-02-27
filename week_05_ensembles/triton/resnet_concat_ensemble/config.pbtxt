@@ -1,0 +1,93 @@
+name: "resnet_concat_ensemble"
+platform: "ensemble"
+max_batch_size: 4
+
+
+input [
+  {
+    name: "IMAGE_PATH"
+    data_type: TYPE_STRING
+    dims: [ -1 ]
+  }
+]
+
+output [
+  {
+    name: "embedding"
+    data_type: TYPE_FP32
+    dims: [ 1000 ]
+  }
+]
+
+ensemble_scheduling {
+  step [
+    {
+      model_name: "resnet_preprocessing"
+      model_version: -1
+      input_map [
+        {
+          key: "IMAGE_PATH"
+          value: "IMAGE_PATH"
+        }
+      ]
+      output_map [
+        {
+          key: "IMAGE_V1"
+          value: "IMAGE_V1"
+        }
+      ]
+    },
+    {
+      model_name: "resnet_preprocessing_v2"
+      model_version: -1
+      input_map [
+        {
+          key: "IMAGE_PATH"
+          value: "IMAGE_PATH"
+        }
+      ]
+      output_map [
+        {
+          key: "IMAGE_V2"
+          value: "IMAGE_V2"
+        }
+      ]
+    },
+    {
+      model_name: "resnet_concat_preprocessing"
+      model_version: -1
+      input_map [
+        {
+          key: "IMAGE_V1"
+          value: "IMAGE_V1"
+        },
+        {
+          key: "IMAGE_V2"
+          value: "IMAGE_V2"
+        }
+      ]
+      output_map [
+        {
+          key: "IMAGE"
+          value: "IMAGE"
+        }
+      ]
+    },
+    {
+      model_name: "resnet_inference"
+      model_version: -1
+      input_map [
+        {
+          key: "image"
+          value: "IMAGE"
+        }
+      ]
+      output_map [
+        {
+          key: "embedding"
+          value: "embedding"
+        }
+      ]
+    }
+  ]
+}
