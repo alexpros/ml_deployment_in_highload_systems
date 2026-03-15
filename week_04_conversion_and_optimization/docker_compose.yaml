@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+    tritonserver:
+        ports:
+            - '13330:8000' # --http-port
+            - '13331:8001' # --grpc-port          
+            - '13332:8002' # --metrics-port
+        volumes:
+            - '/Users/doblakov/Desktop/triton_course/triton_repository:/models' # репа с ансамблем
+        container_name: 'triton_course_experiments'
+        image: nvcr.io/nvidia/tritonserver:24.05-py3 #base-images.artifactory.s.o3.ru/docker/triton-server:24.05-py3 #nvcr.io/nvidia/tritonserver:24.05-py3
+        # image: nvcr.io/nvidia/tritonserver:25.01-trtllm-python-py3
+        command: >
+            tritonserver --id=triton-course-experiments
+            --model-repository=/models
+            --exit-on-error=false
+            --model-control-mode=explicit
+            --strict-model-config=false
+            --allow-metrics=true
+            --allow-gpu-metrics=true
+            --allow-cpu-metrics=true
+            --log-verbose=1
+            --cache-config local,size=1048576
+        shm_size: '2gb'

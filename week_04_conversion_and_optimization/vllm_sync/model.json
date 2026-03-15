@@ -1,0 +1,11 @@
+{
+    "gpu_memory_utilization": 0.8,
+    "enable_prefix_caching": true,
+    "max_model_len": 5000,
+    "dtype": "bfloat16",
+    "tensor_parallel_size": 1,
+    "sampling_params": {
+        "max_tokens": 128,
+        "temperature": 0
+    }
+}

@@ -1,0 +1,48 @@
+name: "onnx_model_resnet"
+platform: "onnxruntime_onnx"
+max_batch_size: 16
+
+#optimization { 
+#  execution_accelerators { 
+#    gpu_execution_accelerator : [
+#      {
+#        name : "tensorrt"
+#        parameters { key: "precision_mode" value: "FP32" }
+#      }
+#    ]
+#  }
+#}
+
+#response_cache {
+#    enable: true
+#}
+
+
+
+input [
+  {
+    name: "input"
+    data_type: TYPE_FP32
+    dims: [3, 224, 224]  
+  }
+]
+
+output [
+  {
+    name: "output"
+    data_type: TYPE_FP32
+    dims: [128] 
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU  
+  }
+]
+
+# Fix threads count to avoid throttling
+# parameters { key: "intra_op_thread_count" value: { string_value: "128" } }
+# parameters { key: "inter_op_thread_count" value: { string_value: "128" } }
+# parameters { key: "execution_mode" value: { string_value: "1" } }

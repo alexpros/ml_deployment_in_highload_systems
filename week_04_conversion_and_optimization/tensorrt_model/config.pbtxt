@@ -1,0 +1,26 @@
+name: "tensorrt_model"
+platform: "tensorrt_plan"
+max_batch_size: 16
+
+input [
+  {
+    name: "input"
+    data_type: TYPE_FP32
+    dims: [3, 224, 224] 
+  }
+]
+
+output [
+  {
+    name: "output"
+    data_type: TYPE_FP32
+    dims: [128]
+  }
+]
+
+instance_group [
+  {
+    count: 1
+    kind: KIND_GPU  
+  }
+]
