@@ -1,0 +1,28 @@
+name: "resnet_postprocessing"
+backend: "python"
+max_batch_size: 4
+
+
+input [
+  {
+    name: "embedding"
+    data_type: TYPE_FP32
+    dims: [ 1000 ]
+  }
+]
+
+output [
+  {
+    name: "score"
+    data_type: TYPE_FP32
+    dims: [ 1 ]
+  }
+]
+
+instance_group [
+    {
+        count: 4
+        kind: KIND_CPU
+    }
+]
+

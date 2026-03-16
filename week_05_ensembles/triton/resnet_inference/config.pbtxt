@@ -1,0 +1,39 @@
+name: "resnet_inference"
+platform: "onnxruntime_onnx"
+max_batch_size: 4
+
+
+input [
+  {
+    name: "image"
+    data_type: TYPE_FP32
+    dims: [ 3, 224, 224 ]
+  }
+]
+
+output [
+  {
+    name: "embedding"
+    data_type: TYPE_FP32
+    dims: [ 1000 ]
+  }
+]
+
+instance_group [
+    {
+        count: 1
+        kind: KIND_GPU
+    }
+]
+
+optimization {
+  execution_accelerators {
+    cpu_execution_accelerator: []
+    gpu_execution_accelerator: []
+  }
+}
+
+parameters {
+  key: "trt_layer_norm_fp32_fallback"
+  value: { string_value: "True" }
+}

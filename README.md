@@ -8,6 +8,7 @@
 ## Содержание
 
 - [Week_01](./week_01_introduction/) -- Введение.
-- [Week_02](./week_02_triton_infrenece_server/) -- Triton Inference Server.
+- [Week_02](./week_02_triton_inference_server/) -- Triton Inference Server.
 - [Week_03](./week_03_backends/) -- Подробнее про бэкенды.
 - [Week_04](./week_04_conversion_and_optimization/) -- Ускорение моделей.
+- [Week_05](./week_05_ensembles/) -- Ансамбли.
